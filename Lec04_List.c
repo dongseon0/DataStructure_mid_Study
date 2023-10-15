@@ -184,3 +184,38 @@ void insert_end(ListNode **phead, ListNode *node){
 }
 
 /*************** Doubly Linked List **************/
+typedef int element;
+typedef struct DlistNode{
+    element data;
+    struct DlistNode *llink;
+    struct DlistNode *rlink;
+}DlistNode;
+
+void init(DlistNode *phead){
+    phead->llink = phead;
+    phead->rlink = phead;
+}
+
+void dinsert_node(DlistNode *before, DlistNode *new_node){
+    new_node->llink = before;
+    new_node->rlink = before->rlink;
+    before->rlink = new_node;
+}
+void dremove_node(DlistNode *phead_node, DlistNode *removed){
+    if(removed == phead_node)   return; // blank list
+    removed->llink->rlink = removed->rlink;
+    removed->rlink->llink = removed->llink;
+    free(removed);
+}
+void main(){
+    DlistNode head_node;
+    DlistNode *p[10];
+
+    init(&head_node);
+    for(int i=0; i<5; i++){
+        p[i] = (DlistNode *)malloc(sizeof(DlistNode));
+        p[i]->data = i;
+        dinsert_node(&head_node, p[i]);
+    }
+
+}
