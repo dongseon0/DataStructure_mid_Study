@@ -225,6 +225,11 @@ consumer(){
 }
 */
 /********* Simulation **********/
+//수정필요 
+
+#define MAX_QUEUE_SIZE  100
+
+
 typedef struct element{
     int id;
     int arrival_time;
@@ -232,6 +237,96 @@ typedef struct element{
 }element;   //Costumer structure
 
 typedef struct QueueType{
-    
+    element queue[MAX_QUEUE_SIZE];
+    int front, rear;
+}QueueType;
+
+ QueueType queue;
+
+double random(){
+    return random();
+}
+void enqueue(QueueType *q, element item){
+    QueueNode *temp = (Queue *)malloc(sizeof(QueueNode));   //node temp 생성, 메모리 할당
+    if(temp == NULL)
+        error();
+    else{
+        temp -> item;
+        temp -> link = NULL;    //노드 초기화
+        if(is_empty(q)){
+            q->front = temp;
+            q->rear = temp;
+        }else{
+            q->rear->link = temp;
+            q->rear -> temp;
+        }
+    }
 }
 
+
+int duration = 10;
+double arrival_prob = 0.7;
+int max_serv_time = 5;
+int clock;
+
+int customers;
+int served_customers;
+int waited_time;
+
+int is_customer_arrived(){
+    if (random() < arrival_prob)
+        return 1;
+    else    return 0;
+}
+
+void insert_customer(int arrival_time){
+    element customer;   //customer 구조체(element형)
+
+    customer.id = customers++;
+    customer.arrival_time = arrival_time;
+    customer.service_time = (int)(max_serv_time * random())+1; // 왜 +1?
+    enqueue(&queue, customer);
+    printf("Customer %d comes in %d minutes, Service time is %d minutes.",
+        customer.id, customer.arrival_time, customer.service_time);
+}
+int remove_customer(){
+    element customer;
+    int service_time = 0;
+    if(is_empty(&queue))    return 0;
+    service_time = customer.service_time -1;
+    served_customers++;
+    waited_time += clock - customer.arrival_time;
+    printf("Customer %d starts service in %d minutes. Wait time was %d minutes.", 
+        customer.id, clock, clock-customer.arrival_time);
+    return service_time;
+}
+
+void print_stat(){
+    printf("Number of customers served = %d", served_customers);
+    printf("Total wait time = %d minutes", waited_time);
+    printf("Average wait time per person = %f minutes",
+        (double) waited_time / served_customers);
+    printf("Number of customers still waiting = %d", 
+        customers - served_customers);
+}
+
+void main(){
+    int service_time = 0;
+    clock = 0;
+    while(clock<duration){
+        clock++;
+        printf("Current time=%d\n", clock);
+        if(is_customer_arrived()){
+            insert_customer(clock); //clock이 arrival time
+        }
+
+        if(service_time >0){    //service이 finish or not
+            service_time--;
+        }
+        else{
+            service_time = remove_customer(); //return service_time(how long it takes)
+        }
+    }
+
+print_stat();
+}
