@@ -80,14 +80,14 @@ void enqueue(QueueType *q, element item){
     if(temp == NULL)
         error();
     else{
-        temp -> item;
+        temp -> item = item;
         temp -> link = NULL;    //노드 초기화
         if(is_empty(q)){
             q->front = temp;
             q->rear = temp;
         }else{
             q->rear->link = temp;
-            q->rear -> temp;
+            q->rear = temp;
         }
     }
 }
