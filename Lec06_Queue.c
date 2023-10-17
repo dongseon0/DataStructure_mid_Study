@@ -241,7 +241,7 @@ typedef struct QueueType{
     int front, rear;
 }QueueType;
 
- QueueType queue;
+QueueType queue;
 
 double random(){
     return random();
