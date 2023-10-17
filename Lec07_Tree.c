@@ -47,8 +47,7 @@ postorder(x){
 */
 
 //total
-
-
+/*
 #include <stdio.h>
 
 typedef struct TreeNode{
@@ -92,12 +91,45 @@ int main(){
     preorder(root);
     printf("\n");
     postorder(root);
-}
+}*/
+
+#include <stdio.h>
+
+typedef struct TreeNode{
+    int data;
+    struct TreeNode *left, *right;
+}TreeNode;
+
+typedef TreeNode *element;
+typedef struct QueueNode{
+    element item;
+    struct QueueNode *link;
+}QueueNode;
+
+typedef struct QueueType{
+    QueueNode *front;
+    QueueNode *rear;
+}QueueType;
+
+TreeNode n1 = {1, NULL, NULL};
+TreeNode n2 = {4, &n1, NULL};
+TreeNode n3 = {16, NULL, NULL};
+TreeNode n4 = {25, NULL, NULL};
+TreeNode n5 = {20, &n3, &n4};
+TreeNode n6 = {15, &n2, &n5};
+TreeNode *root = &n6;
+
 
 void level_order(TreeNode *ptr){
     QueueType q;
     init(&q);
-    
+    if(ptr == NULL)  return ; //그냥 함수 끝내는 것
+
+    enqueue(&q, ptr);
+    while(!is_empty(&q)){
+        ptr
+    }
+
 
 
 
