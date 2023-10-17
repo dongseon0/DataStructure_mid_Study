@@ -108,9 +108,159 @@ int main(){
 */
 
 
+/****** Stack Application: Calculation of Formulas ******
+int eval(char exp[]){
+    int op1, op2, value, i =0 ;
+    int len = srlen(exp);
+    char ch;
+    StackType s;
+
+    init(&s);
+    for(int i=0; i<len; i++){
+        ch = exp[i];
+        if(ch!='+' && ch!='-' && ch!='*' && ch!='/'){
+            value = ch - '0'; //숫자도 char로 받기 때매 정수형으로 바꿔주는 것
+            push(&s, value);
+        }else{  //operator이면 두 숫자 pop하고 operate
+            op2 = pop(&s);
+            op1 = pop(&s);
+            switch(ch){
+                case '+': push(&s, op1 + op2); break; 
+                case '-': push(&s, op1 - op2); break;
+                case '*': push(&s, op1 * op2); break;
+                case '/': push(&s, op1 / op2); break;
+            }
+        }
+    }
+    return pop(&s);
+}
+void main(){
+    int result = eval("82/3-32*+");
+    printf("result: %d", result);
+
+}
+*/
+/******* infix to postfix***
+//1) operand : print
+//2) operator 
+//  a. stack >= current --> stack print, current store in stack
+//  b. stack < current : store
+//  c. ')'이면 output all operators
+//  d. end면 다 꺼내기
+
+typedef struct StackType{
+    struct StackType *top;
+}StackType;
+
+int prec(char op){ //operator's priority
+    switch(op){
+        case '(':
+        case ')':
+            return 0;
+        case '+' :
+        case '-' :
+            return 1;
+        case '*' :
+        case '/' :
+            return 2;
+    }
+}
+
+void infix_to_postfix(char exp[]){
+    char ch, top_op;
+    int len = strlen(exp);
+    StackType s;
+    init(&s);
+    for(int i=0; i<len; i++){
+        ch = exp[i];
+        switch (ch){
+            case '+' :
+            case '-' :
+            case '*' :
+            case '/' :
+                while(!is_empty(&s) && (pre(ch))<=prec(peek(&s))){
+                    printf("%c", pop(&s));
+                }
+                push(&s, ch);
+                break;
+            case '(':
+                push(&s, ch);
+                break;
+            case ')':
+                top_op = pop(&s);
+                while(top_op!='('){
+                    printf("%c", top_op);
+                    top_op = pop(&s)l
+                }
+                break;
+            default : //operand
+                printf("%c", ch);
+                break;
+        }
+    }
+    while(!is_empty(&s)){
+        printf("%c", pop(&s));
+    }
+}
+
+void main(){
+    infix_to_postfix("~~");
+}
+*/
+
+typedef struct StackType{
+    struct StackType *top;
+}StackType;
+typedef struct element{
+    int r;
+    int c;
+}element;
+
+element here = {1,0};
+entry = {1,0};
 
 
+void push_loc(StackType *s, int r, int c){
+    if(r<0 ||c<0)   return;
+    if(maze[r][c] != '1' && maze[r][c]!='.'){   //block이 아니고 아직 방문하지 않은 곳
+        element tmp;
+        tmp.r = r;
+        tmp.c = c;
+        push(s, tmp);
+    }
+}
 
+char maze[MAZE_SIZE][MAZE_SIZE]{
+    { '1', '1', '1', '1', '1', '1' },
+{ 'e', '0', '1', '0', '0', '1' },
+{ '1', '0', '0', '0', '1', '1' },
+{ '1', '0', '1', '0', '1', '1' },
+{ '1', '0', '1', '0', '0', 'x' },
+{ '1', '1', '1', '1', '1', '1' },
+};
+
+void main(){
+    int r, c;
+    StackType s;
+    init(&s);
+    here = entry;
+    while(maze[here.r][here.c]!='x'){ //'x'는 exit
+        r = here.r;
+        c = here.c;
+        maze[r][c] = '.';
+        push_loc(&s, r-1, c);//위
+        push_loc(&s, r+1, c);//아래
+        push_loc(&s, r, c-1);//왼
+        push_loc(&s, r, c+1);//오
+        if(is_empty(&s)){
+            printf("fail");
+            return;
+        }else{
+            here = pop(&s);
+        }
+    }
+    printf("success");
+}
 
 
 
