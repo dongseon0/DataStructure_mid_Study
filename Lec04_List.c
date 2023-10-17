@@ -1,3 +1,4 @@
+/*
 //List using Array
 #define MAX_LIST_SIZE 100
 
@@ -41,7 +42,7 @@ element delete(ArrayListType *L, int position){
     return item;
 }
 
-/*************** Simple Linked List **************/
+/*************** Simple Linked List **************
 typedef int element;
 typedef struct ListNode{
     element data;
@@ -50,7 +51,8 @@ typedef struct ListNode{
 /* // Node generation
 ListNode *p;
 p = (ListNode*)malloc(sizeof(ListNode));
-*/
+
+
 
 
 void insert_node(ListNode **phead, ListNode *p, ListNode *new_node){
@@ -183,7 +185,7 @@ void insert_end(ListNode **phead, ListNode *node){
     }
 }
 
-/*************** Doubly Linked List **************/
+/*************** Doubly Linked List **************
 typedef int element;
 typedef struct DlistNode{
     element data;
@@ -218,4 +220,163 @@ void main(){
         dinsert_node(&head_node, p[i]);
     }
 
+}
+*/
+
+
+/*
+typedef struct ListNode{
+    int coef;
+    int expon;
+    struct ListNode *link;
+}ListNode;
+
+typedef struct ListHeader{
+    int length;
+    ListNode *head;
+    ListNode *tail;
+}ListHeader;
+
+void init(ListHeader *plist){
+    plist->length = 0;
+    plist->head = plist->tail = NULL;
+}
+
+void insert_node(ListHeader *plist, int coef, int expon){
+    ListNode *temp = (ListHeader *)malloc(sizeof(ListNode));
+    if(temp==NULL) error();
+    temp->coef = coef;
+    temp_>expon = expon;
+    temp ->link = NULL;
+    if(plist->tail == NULL){
+        plist->head = plist->tail = temp;
+    }else{
+        plist->tail->link = temp;
+        plist->tail = temp;
+    }
+    plist->length++;
+}
+
+void poly_add(ListHeader *plist1, ListHeader *plist2, ListHeader *plist3){
+    ListNode *a = plist1->head;
+    ListNode *b = plist2->head;
+    int sum;
+    while(a && b){
+        if(a->expon == b->expon){
+            sum = a->coef +b->coef;
+            if(sum!=0){
+                insert_node_last(plist3, sum, a->expon);    
+            }
+            a= a->link; b= b->link;
+        }else if(a->expon > b->expon){
+            insert_node_last(plist3, a->coef, a->expon);
+            a= a->link;
+        }else{
+            insert_node_last(plist3, b->coef, b->expon);
+            b= b->link;
+
+        }
+    }
+    for(; a!=NULL; a=a->link){
+        insert_node_last(plist3, a->coef, a->expon);
+    }
+    for(; b!=NULL; b= b->link){
+        insert_node_last(plist3, b->coef, b->expon);
+    }
+
+void poly_print(ListHeader *plist){
+    ListNode *p = plist->head;
+    for(; p; p=p->link){
+        printf("%d %d\n", p->coef, p->expon);
+    }
+}
+}*/
+
+
+/******* List ADT ********/
+typedef int element;
+
+typedef struct ListNode{
+    element data;
+    struct ListNode *link;
+
+} ListNode;
+
+
+typedef struct{
+    ListNode *head;
+    int length;
+} ListType;
+
+ListType list1;
+
+int is_empty(ListType *list){
+    if(list->head == NULL) return 1;
+    else return 0;
+}
+
+int get_length(ListType *list){
+    return list->length;
+}
+
+//return node pointer of pos in the list.
+ListNode *get_node_at(ListType *list, int pos){
+    ListNode *tmp_node = list->head;
+    if(pos<0) return NULL;
+    for(int i=0; i<pos; i++){
+        tmp_node = tmp_node->link;
+        return tmp_node;    // pos 노드 리턴
+    }
+}
+
+void add(ListType *list, int position, element data){
+    ListNode *p;
+    if((position >=0) && (position <= list->length)){
+        ListNode *node = (ListNode *)malloc(sizeof(ListNode));
+        node->data = data;
+        p = get_node_at(list, position-1);
+        insert_node(&(list->head), p, node);
+        list->length++;
+    }
+}
+
+void delete(ListType *list, int pos){
+    if(!is_empty(list) && (pos>=0) && (pos<list->length)){
+        ListNode *p = get_node_at(list, pos-1);
+        ListNode *removed = get_node_at(list, pos);
+        remove_node(&(list->head), p, removed);
+        list->length--;
+    }
+}
+
+
+//Return the data at the 'pos'
+element get_entry(ListType *list, int pos){
+    ListNode *p;
+    if(pos>= list->length||pos<0) error();
+    p = get_node_at(list, pos);
+    return p->data;
+}
+
+void display(ListType *list){
+    ListNode *node = list->head;
+    for(int i=0; i<list->length; i++){
+        printf("%d", node->data);
+        node = node->link;
+    }
+    printf("\n");
+}
+
+int is_in_list(ListType *list, element item){
+    ListNode *p;
+    p= list->head;
+    while((p!=NULL)){
+        if(p->data ==item){
+            break;
+            p= p-> link;
+        }
+    if(p==NULL) return FALSE;
+    else return TRUE;
+
+    }
 }
