@@ -94,6 +94,7 @@ int main(){
 }*/
 
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct TreeNode{
     int data;
@@ -127,11 +128,52 @@ void level_order(TreeNode *ptr){
 
     enqueue(&q, ptr);
     while(!is_empty(&q)){
-        ptr
+        ptr = dequeue(&q);
+        printf("%d\n", ptr->data);
+        if(ptr->left){
+            enqueue(&q, ptr->left);
+        }
+        if(ptr->right){
+            enqueue(&q, ptr->right);
+        }
     }
+}
+void enqueue(QueueType *q, element item){
+    QueueNode *temp = (Queue *)malloc(sizeof(QueueNode));   //node temp 생성, 메모리 할당
+    if(temp == NULL)
+        error();
+    else{
+        temp -> item = item;
+        temp -> link = NULL;    //노드 초기화
+        if(is_empty(q)){
+            q->front = temp;
+            q->rear = temp;
+        }else{
+            q->rear->link = temp;
+            q->rear = temp;
+        }
+    }
+}
+element dequeue(QueueType *q){
+    QueueNode *temp = q->front;
+    element item;
+    if(is_empty(q))
+        error();
+    else{
+        item = temp ->item;
+        q->front = q->front->link;
+        if(q->front == NULL)   //node가 하나 밖에 없었으면
+            q-> rear = NULL;
+        free(temp);
+        return item;
+    }
+}
+elemen
 
 
 
-
-
+int main(){
+    printf("level traversal\n");
+    level_order(root);
+    printf("\n");
 }
