@@ -178,7 +178,7 @@ void infix_to_postfix(char exp[]){
             case '-' :
             case '*' :
             case '/' :
-                while(!is_empty(&s) && (pre(ch))<=prec(peek(&s))){
+                while(!is_empty(&s) && (prec(ch))<=prec(peek(&s))){
                     printf("%c", pop(&s));
                 }
                 push(&s, ch);
