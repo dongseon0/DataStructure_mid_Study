@@ -185,8 +185,60 @@ main(){
     SparseMatrix m3;
     m3 = sparse_matrix_add2(m1, m2);
 }
+*/
+/*
+void swap(int *px, int *py){
+    int tmp;
+    tmp = *px;
+    *px = *py;
+    *py = tmp;
+}*/
 
+/*
+main(){
+    struct{
+        int i;
+        float f;
+    }s, *ps;
+    ps = &s;
+    //주소로 access이면 ->사용
+    ps->i = 2;
+    ps->f = 3.14;
+    //데이터로 access이면 .사용
+    (*ps).i = 2;
+    (*ps).f = 3.14;
+}*/
 
+//Dynamic Memory Allocation
+/*
+int *pi;
+pi = (int*)malloc(sizeof(int));
+-
+-
+free(pi); // pi를 free해주지 않으면 메모리에 저장됨.
+
+//ex
+int pi[10];
+pi = (int*)malloc(sizeof(int)*10); //size
+
+*/
+
+//Memory Allocation of 2D Array
+void main(){
+    int row = 3;
+    int col = 3;
+    int **m2 = (int *)malloc(sizeof(int *)*row);
+    for(int i=0; i<row; i++){
+        m2[i]= (int *)malloc(sizeof(int)*col); //expand column dimension
+    }
+    int count = 0;
+    for(int i=0; i<row; i++){
+        for(int j=0; j<col; j++){
+            m2[i][j] = ++count;
+            prinf_s("%d", m2[i][j]);
+        }
+    }
+}
 
 
 
