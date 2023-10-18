@@ -76,7 +76,7 @@ typedef struct QueueType{
 
 
 void enqueue(QueueType *q, element item){
-    QueueNode *temp = (Queue *)malloc(sizeof(QueueNode));   //node temp 생성, 메모리 할당
+    QueueNode *temp = (QueueNode *)malloc(sizeof(QueueNode));   //node temp 생성, 메모리 할당
     if(temp == NULL)
         error();
     else{
@@ -93,7 +93,7 @@ void enqueue(QueueType *q, element item){
 }
 
 element dequeue(QueueType *q){
-    QueueType *temp = q->front;
+    QueueNode *temp = q->front;
     element item;
     if(is_empty(q))
         error();
