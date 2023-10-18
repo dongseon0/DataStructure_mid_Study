@@ -46,4 +46,32 @@ void hanoi_tower(int n, char from, char tmp, char to){
 }
 */
 
+//Binary search
+int search_iter(A,b){
+    for (int i=1; i<n+1; i++){
+        if(A[i]==b){
+            k=i;
+            break;
+        }
+    }
+    return k;
+}
 
+int search_recur(A,b, start, end){
+    if(start>end)   return -1;
+    int median = (start+end)/2;
+    if(A[median]<b){
+        search_recur(A, b, median, end);
+    }else if(A[median]>b){
+        search_recur(A, b, start, median);
+    }else   return median;
+}
+
+
+float answer = 1;
+float ratio = 2;
+int k = n;
+while(k>0){
+    answer= answer*ratio;
+    k = k/2;
+}
