@@ -28,6 +28,17 @@
 // Adjacency Matrix
     // edge(i,j), M[i][j] = 1 , 아니면 0
     // undirected면 symmetric하게 1일 것.
+
+    typedef struct GraphType {
+        int n;// The number of vertices
+        GraphNode *adj_mat[MAX_VERTICES][MAX_VERTICES];
+        } GraphType;
+    
+
+
+
+
+
 // Adjacency List
     // each vertex에 linked list 달기.
     // 0 -> 1, 2, 3 link
