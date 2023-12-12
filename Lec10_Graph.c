@@ -120,4 +120,63 @@ void bfs_list(GraphType *g, int v) {
         }
     }
 
-//ㅊ
+// Connected Component : sub-graphs
+    //use DFS, BFS
+
+void find_connected_component(GraphType *g) {
+    int i;
+    count = 0;
+    for (i = 0; i<g->n; i++)
+    if (!visited[i]) { 
+        count++;
+        dfs_list(g, i);
+    }
+}
+
+void dfs_list(GraphType *g, int v){
+    GraphNode *w;
+    visited[v] = count; //label
+    for(w = g->adj_list[v]; w; w = w->link){
+        if(!visited[w->vertex]){
+            dfs_list(g, w->vertex);
+        }
+    }
+}
+
+// Spanning tree
+    // all vertices connected and not contain cycles.
+    // n vertices, n-1 edges.
+
+
+// MST : Minimum Spanning Tree(MST)
+    //connected with smallest costs : 적은 비용으로 그래프 만들기!
+    // 1) Kruskal algorithm
+    // 2) Prim algorithm
+
+// 1) KrusKal Algorithm
+    // Greedy method
+    // 순서 : 1. weight에 따라 edge sort
+            // 2. MST 배열 null로 초기화
+            // 3. cycle 안만들면 select!
+
+    //+) Union-find algorithm : checking cycle in kruskal algorithm
+37쪽 부터!!!
+
+
+//Prim algorithm
+    // 순서 : 1) start vertex in MST
+            // 2) lowest cost in MST. ...
+            // 3) repeat untile MST has n-1 edges.
+    // min-heap : 1. 노드 하나 임의로 선택
+                //2. 해당 노드에서 갈 수 있는 노드를 minheap에 넣음
+                //3. heap에서 꺼내서 방문 안한 노드는 해당 노드에서 갈 수 있는 노드를 
+                    //minheap에 추가로 넣음
+                //4. 모든 노드 방문 시 탈출
+
+// Dijkstra Algorithm
+    // 현재까지 알고 있던 최단경로를 계속해서 갱신 : 최소비용 갱신!!
+    // find shortest path
+
+
+
+

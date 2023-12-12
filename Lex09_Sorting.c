@@ -93,7 +93,7 @@ void merge_sort(int list[], int left, int right){
         // Best : O(nlog2n)
         // Worst : O(n^2)
 
-in partition(int list[], int left, int right){
+int partition(int list[], int left, int right){
     int pivot, temp;
     int low, high;
 
