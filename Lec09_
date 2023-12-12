@@ -1,0 +1,51 @@
+// Stability : relative position with same key value is not changing
+
+// Selection Sort
+    // left list : sorted data
+    // right list : unordered data
+    // 순서 : Right list가 empty일 때까지,
+        // right list의 첫번째 요소와 가장 작은 요소를 바꾼다
+
+#define SWAP(x, y, t) ( (t)=(x), (x)=(y), (y)=(t) )
+void selection_sort(int list[], int n){
+    int i, j, least, temp;
+    for(i=0; i<n-1; i++){
+        least = i;
+        for(j=i+1; j<n; j++){
+            if(list[j]<list[least]) least = j; //right의 최솟값 찾기
+        }
+        SWAP(list[i], list[least], temp);
+    }
+}
+
+// Insertion Sort
+    // insert a new record in right place of sorted part
+    // 순서 : right의 요소를 left(sorted)의 맞는 자리에 insert
+        //right에서 요소 꺼내서 left의 요소들과 하나하나 대조
+    // Time Complexity : O(n^2)
+void insertion_sort(int list[], int n){
+    int i, j, key;
+    for(i - 1; i<n; i++){
+        key = list[i];
+        for(j=i-1; j>=0 && list[j]>key; j--){
+            list[j+1] = list[j];
+        }
+        list[j+1] = key;
+    }
+}
+
+// Bubble Sort
+    // n번 iteration, adjacent data끼리 sorting 반복 후 마지막은 고정
+#define SWAP(x, y, t) ( (t)=(x), (x)=(y), (y)=(t) ) 
+void bubble_sort(int list[], int n){
+    int i, j, temp;
+    for(i = n-1; i>0; i--){
+        for(j=0; j<i; j++){
+            if(list[j]>list[j+1]){
+                SWAP(list[j], list[j+1], temp);
+            }
+        }
+    }
+}
+
+// Merge Sort
