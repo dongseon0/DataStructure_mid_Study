@@ -46,3 +46,78 @@
     // undirected면 symmetric
 
 
+// Graph Search
+// 1. BFS(Breadth First Search) : queue
+// 2. DFS(Depth First Search) : stack
+
+// DFS : Depth first search
+    // 한방향으로 가고, 더 이상 못가면 go back
+    // go back을 위해 stack 사용
+    // Time Complexity : O(|V| + |E|)  - vertex 개수만큼 방문, edge수 만큼 check.
+void dfs_mat(GraphType *g, int v){
+    int w;
+    visited[v] = TRUE; //mark v as visited
+    for(w =0; w<g->n; w++){  //search adjacent nodes
+        if(g->adj_mat[v][w] && !visited[w]){
+            dfs_mat(g, w);
+        }
+    }
+}
+
+void dfs_list(GraphType *g, int v){
+    GraphNode *w;
+    visited[v] = True;
+    for(w = g->adj_list[v]; w; w = w->link]){
+        if(!visited[w->vertex]){
+            dfs_list(g, w->vertex);
+        }
+    }
+}
+
+
+// BFS : Breadth first search
+    // using Queue, visiting all the neighbors
+    // 순서 : 한개 꺼내서 모든 인접 노드 큐에 넣기
+        // 이동하면서 queue에서 빼고 반복.
+    //** visit로 체크하면서 큐에 넣는다.
+    //** 큐에서 빼면서 이동한다.
+    // Time Complexity : O(|V| + |E|)  
+    //-> vertex 개수만큼 queue에 넣음, edge수 만큼 check.
+
+void bfs_mat(GraphType *g, int v) {
+    int w;
+    QueueType q;
+    init(&q); 
+    visited[v]= TRUE;
+    enqueue(&q, v); //insert v in queue
+    while(!is_empty(&q)){
+        v = dequeue(&q);
+        for(w=0; w< g->n; w++){
+            if(g->adj_mat[v][w]) && !visited[w]){
+                visited[w] = TRUE;
+                enqueue(&q, w);
+            }
+        }
+    }
+}
+
+void bfs_list(GraphType *g, int v) {
+    GraphNode *w;
+    QueueType q;
+    init(&q);
+    visited[v] = TRUE;
+    printf("%d ", v);
+    enqueue(&q, v);
+    while(!is_empty(&q)){
+        v = dequeue(&q);
+        for(w=g->adj_list[v]; w; w=w->link){
+            if(!visited[w->vertex]){
+                visited[w->vertex] = TRUE;
+                enqueue(&q, w->vertex);
+
+
+            }
+        }
+    }
+
+//ㅊ
